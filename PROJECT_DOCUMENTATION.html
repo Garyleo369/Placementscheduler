@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Placement Week Scheduler - Comprehensive Project Documentation & MERN Stack Report</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --secondary: #0f172a;
+      --accent: #3b82f6;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --code-bg: #0f172a;
+      --code-text: #e2e8f0;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text-main);
+      line-height: 1.65;
+      padding: 2.5rem 1.5rem;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      padding: 3.5rem;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
+      border: 1px solid var(--border);
+    }
+
+    .header {
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 2rem;
+      margin-bottom: 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .badge-pill {
+      display: inline-block;
+      padding: 0.35rem 0.85rem;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.025em;
+      text-transform: uppercase;
+      background: #eff6ff;
+      color: var(--primary);
+      border: 1px solid #bfdbfe;
+      margin-bottom: 0.75rem;
+    }
+
+    h1 {
+      font-size: 2.25rem;
+      font-weight: 800;
+      color: var(--secondary);
+      line-height: 1.25;
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    .print-btn {
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      padding: 0.75rem 1.25rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
+      transition: background 0.2s ease;
+    }
+
+    .print-btn:hover {
+      background: var(--primary-dark);
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--secondary);
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--secondary);
+      margin-top: 1.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    p {
+      margin-bottom: 1.1rem;
+    }
+
+    ul, ol {
+      margin-bottom: 1.25rem;
+      padding-left: 1.5rem;
+    }
+
+    li {
+      margin-bottom: 0.4rem;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      margin: 1.5rem 0;
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      background: #fafafa;
+    }
+
+    .card h4 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--secondary);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .card-icon {
+      width: 24px;
+      height: 24px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #e0e7ff;
+      color: var(--primary);
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: bold;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      font-size: 0.925rem;
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 0.75rem 1rem;
+      text-align: left;
+    }
+
+    th {
+      background: #f1f5f9;
+      color: var(--secondary);
+      font-weight: 600;
+    }
+
+    tr:nth-child(even) {
+      background: #f8fafc;
+    }
+
+    pre, code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    code {
+      background: #f1f5f9;
+      color: #0f172a;
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.875rem;
+    }
+
+    pre {
+      background: var(--code-bg);
+      color: var(--code-text);
+      padding: 1.25rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 0.875rem;
+      line-height: 1.5;
+      margin: 1.25rem 0;
+    }
+
+    pre code {
+      background: none;
+      color: inherit;
+      padding: 0;
+      border-radius: 0;
+    }
+
+    .formula-box {
+      background: #f8fafc;
+      border-left: 4px solid var(--primary);
+      padding: 1rem 1.25rem;
+      border-radius: 0 8px 8px 0;
+      margin: 1.25rem 0;
+      font-family: ui-monospace, monospace;
+      font-weight: 600;
+      color: var(--secondary);
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .tag-blue { background: #dbeafe; color: #1e40af; }
+    .tag-green { background: #dcfce7; color: #166534; }
+    .tag-amber { background: #fef3c7; color: #92400e; }
+    .tag-purple { background: #f3e8ff; color: #6b21a8; }
+
+    @media print {
+      body {
+        background: #ffffff;
+        padding: 0;
+      }
+      .container {
+        border: none;
+        box-shadow: none;
+        padding: 0;
+        max-width: 100%;
+      }
+      .print-btn {
+        display: none;
+      }
+      h2 {
+        page-break-before: auto;
+      }
+      pre, table {
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <div>
+      <span class="badge-pill">Enterprise Technical Report</span>
+      <h1>Placement Week Scheduler</h1>
+      <div class="subtitle">Autonomous Placement Operations & Surgical Replanning Platform</div>
+    </div>
+    <div>
+      <button class="print-btn" onclick="window.print()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+        Download / Print PDF
+      </button>
+    </div>
+  </div>
+
+  <h2>1. Project Overview & Problem Statement</h2>
+  <p>
+    University campus placements present a complex, multi-dimensional combinatorial optimization problem. During an intensive 4-day placement cycle, hundreds of students (800+) compete across 35 multi-tier corporate recruiters, dozens of parallel interviewing panels, and limited campus room facilities (20 rooms across 4 floors).
+  </p>
+  <p>
+    Standard manual or naive scheduling approaches fail due to:
+  </p>
+  <ul>
+    <li><strong>Multi-shortlisting conflicts:</strong> Top-tier students shortlisted simultaneously across multiple companies, causing double-booking.</li>
+    <li><strong>Room capacity bottlenecks:</strong> Severe physical constraint starvation during peak interviewing hours.</li>
+    <li><strong>Unforeseen real-time campus disruptions:</strong> Recruiter transit delays, panel dropouts, room outages, or candidate withdrawals. Traditional systems regenerate the schedule entirely, creating chaotic cascading disruptions for hundreds of unaffected candidates.</li>
+  </ul>
+  <p>
+    The <strong>Placement Week Scheduler</strong> solves this through an autonomous MERN platform featuring a high-throughput <strong>Greedy Earliest-Available-Slot (EAS)</strong> scheduler and a groundbreaking <strong>Surgical Replanning Engine</strong> that handles disruptions with zero schedule churn on locked slots.
+  </p>
+
+  <h2>2. Architecture & The MERN Stack Implementation</h2>
+  <p>
+    The system follows a strict, decoupled <strong>MERN</strong> architecture (MongoDB, Express.js, React.js, Node.js) ensuring high performance, fault isolation, and reactive UX:
+  </p>
+
+  <div class="grid-2">
+    <div class="card">
+      <h4><span class="card-icon">M</span> MongoDB & Mongoose ODM</h4>
+      <p style="font-size: 0.9rem; color: var(--text-muted);">
+        Relational document modeling with strict constraints, schema validations, aggregation pipelines for real-time analytics, and high-throughput bulk write operations.
+      </p>
+      <ul>
+        <li><code>Company</code> (Tiers 1-3, priorities, operating days/hours, shortlists)</li>
+        <li><code>Student</code> (Roll number, CGPA, department, shortlist references)</li>
+        <li><code>Room</code> (Physical capacity, building, floor index)</li>
+        <li><code>Panel</code> (Company affiliation, interviewer roster)</li>
+        <li><code>Interview</code> (Time slots, status lifecycle, conflict reasons)</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h4><span class="card-icon">E</span> Express.js REST API</h4>
+      <p style="font-size: 0.9rem; color: var(--text-muted);">
+        Modular, decoupled RESTful API endpoints serving client queries, coordinating background scheduling tasks, and providing granular status codes.
+      </p>
+      <ul>
+        <li><code>/api/health</code> (Liveness probe and system uptime)</li>
+        <li><code>/api/data</code> (Synthetic data generation & status summary)</li>
+        <li><code>/api/schedule</code> (Master schedule generation, filters, aggregations)</li>
+        <li><code>/api/replan</code> (Disruption handler, diff generator, audit logs)</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h4><span class="card-icon">R</span> React.js & Vite Client</h4>
+      <p style="font-size: 0.9rem; color: var(--text-muted);">
+        Responsive dashboard with dark-mode aesthetic, live metric cards, interactive disruption simulation modal, and visual before/after replan diff audits.
+      </p>
+      <ul>
+        <li><code>MetricCards</code> (Scheduled rate, conflicts, room utilization, churn)</li>
+        <li><code>ScheduleTable</code> (Day/status filters, company search, pagination)</li>
+        <li><code>AlertsPanel</code> (Bottleneck constraint breakdown)</li>
+        <li><code>ReplanModal</code> &amp; <code>ReplanResult</code> (Interactive simulation)</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h4><span class="card-icon">N</span> Node.js Algorithmic Core</h4>
+      <p style="font-size: 0.9rem; color: var(--text-muted);">
+        Non-blocking execution of greedy heuristic scheduling and multi-phase surgical replanning algorithms in pure memory.
+      </p>
+      <ul>
+        <li>Integer-minute time representation (09:00 = 540 min)</li>
+        <li>O(1) Hash Map interval collision lookups</li>
+        <li>Round-robin panel load balancing</li>
+        <li>Penalty cost optimization for disruption replanning</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>3. Core Algorithms & Scheduling Logic</h2>
+
+  <h3>3.1 Greedy Earliest-Available-Slot (EAS) Scheduler</h3>
+  <p>
+    The master scheduling engine (<code>server/src/services/scheduler.js</code>) executes a single-pass, explainable heuristic:
+  </p>
+  <ol>
+    <li><strong>Company Priority Sorting:</strong> Companies are ordered ascending by priority (Tier 1 first, ensuring premier recruiters receive prime scheduling windows).</li>
+    <li><strong>Student Merit Sorting:</strong> Within each company shortlist, candidates are sorted descending by CGPA.</li>
+    <li><strong>Panel Load Balancing:</strong> Candidates are evenly distributed across the company's parallel interviewing panels using round-robin bucketing.</li>
+    <li><strong>Conflict-Free Slot Search:</strong> For each candidate, the panel cursor probes prospective time slots:
+      <ul>
+        <li><em>Company Window Check:</em> Ensures slot $[t, t + \text{duration}) \le \text{windowEnd}$.</li>
+        <li><em>Student Conflict Check:</em> Verifies student is not already interviewing in another room. If busy, advances cursor by 5-minute increments (up to 50 retries).</li>
+        <li><em>Room Allocation:</em> Identifies the first vacant physical room across campus.</li>
+      </ul>
+    </li>
+    <li><strong>Explicit Failure Attribution:</strong> If any constraint fails, the interview record is tagged with an explicit classification: <code>NO_STUDENT_AVAILABILITY</code>, <code>NO_ROOM_AVAILABLE</code>, or <code>COMPANY_WINDOW_EXPIRED</code>.</li>
+  </ol>
+
+  <h3>3.2 Surgical Replanner Engine & Penalty Function</h3>
+  <p>
+    When disruptions strike during live placement days, naive systems rebuild the entire master schedule. The Placement Week Scheduler uses a <strong>4-phase surgical approach</strong> (<code>server/src/services/replanner.js</code>):
+  </p>
+  <ul>
+    <li><strong>Phase 1 (Impact Analysis):</strong> Identifies strictly the interviews broken by the disruption (e.g., morning slots for a delayed company, or slots inside an unavailable room).</li>
+    <li><strong>Phase 2 (State Reconstruction):</strong> Unaffected interviews are <em>locked</em>. Slot reservation maps for students, rooms, and panels are constructed using only locked interviews.</li>
+    <li><strong>Phase 3 (Scored Rescheduling):</strong> Every affected interview evaluates all feasible slots across remaining days, panels, and rooms. Each feasible slot is evaluated using a calibrated disruption-penalty function:</li>
+  </ul>
+
+  <div class="formula-box">
+    Score = 50 &times; &Delta;day + 20 &times; &Delta;panel + 10 &times; &Delta;room + 1 &times; (&Delta;WaitMinutes / 5)
+  </div>
+
+  <p>
+    The candidate slot with the lowest score (minimum disruption) is booked. If no slot satisfies all hard constraints, the interview is marked <code>cancelled</code>.
+  </p>
+  <ul>
+    <li><strong>Phase 4 (Diff & Churn Generation):</strong> Compares original vs new states to produce a granular diff report (displaying changed days, times, panels, or rooms) and calculates the exact schedule churn percentage.</li>
+  </ul>
+
+  <h2>4. Disruption Scenarios & Real-World Use Cases</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Disruption Type</th>
+        <th>Campus Event Trigger</th>
+        <th>Surgical Handling Behavior</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="tag tag-amber">COMPANY_DELAY</span></td>
+        <td>Company HR/interviewers delayed by 1-2 hours due to flight/traffic.</td>
+        <td>Only morning interviews falling within the delay window are moved to later afternoon slots or subsequent company operating days.</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-purple">PANEL_DROP</span></td>
+        <td>An interviewer panel abruptly drops out (illness or tech failure).</td>
+        <td>Candidates assigned to that panel are distributed across the company's remaining active panels without exceeding room limits.</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-blue">ROOM_UNAVAILABLE</span></td>
+        <td>Facility maintenance, power failure, or AV issue blocks a room.</td>
+        <td>The room is blocked for that day; all its scheduled interviews are re-allocated to other vacant campus rooms.</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-green">STUDENT_WITHDRAW</span></td>
+        <td>Candidate accepts an off-campus offer or withdraws.</td>
+        <td>All interviews for that student are cancelled, instantly opening up panel and room slots for replanning.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>5. REST API Specification</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Endpoint</th>
+        <th>Method</th>
+        <th>Payload / Parameters</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>/api/health</code></td>
+        <td>GET</td>
+        <td>—</td>
+        <td>System health, uptime, and database connection status.</td>
+      </tr>
+      <tr>
+        <td><code>/api/data/generate</code></td>
+        <td>POST</td>
+        <td><code>{ totalStudents: 800, clearExisting: true }</code></td>
+        <td>Synthesizes 35 companies, 800 candidates, 20 rooms, and panels.</td>
+      </tr>
+      <tr>
+        <td><code>/api/data/summary</code></td>
+        <td>GET</td>
+        <td>—</td>
+        <td>Returns entity count overview in database.</td>
+      </tr>
+      <tr>
+        <td><code>/api/schedule/generate</code></td>
+        <td>POST</td>
+        <td><code>{ clearExisting: true }</code></td>
+        <td>Executes greedy EAS scheduler and persists master interviews.</td>
+      </tr>
+      <tr>
+        <td><code>/api/schedule</code></td>
+        <td>GET</td>
+        <td><code>?day=1&status=scheduled&page=1&limit=50</code></td>
+        <td>Retrieves paginated interviews with multi-criteria filters.</td>
+      </tr>
+      <tr>
+        <td><code>/api/schedule/summary</code></td>
+        <td>GET</td>
+        <td>—</td>
+        <td>Computes overall scheduling rate and failure breakdown aggregation.</td>
+      </tr>
+      <tr>
+        <td><code>/api/replan</code></td>
+        <td>POST</td>
+        <td><code>{ type: "COMPANY_DELAY", companyId, delayMinutes: 60 }</code></td>
+        <td>Applies disruption, performs surgical replan, returns before/after diff.</td>
+      </tr>
+      <tr>
+        <td><code>/api/replan/ids</code></td>
+        <td>GET</td>
+        <td>—</td>
+        <td>Helper returning valid IDs for 1-click interactive simulation.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>6. Installation & Execution Guide</h2>
+
+  <h3>Step 1: Start Backend (Express & Node.js)</h3>
+  <pre><code>cd server
+npm install
+npm run dev</code></pre>
+  <p>The backend will start at <code>http://localhost:5000</code> with auto-reload via Nodemon.</p>
+
+  <h3>Step 2: Start Frontend (React & Vite)</h3>
+  <pre><code>cd client
+npm install
+npm run dev</code></pre>
+  <p>The client application will start at <code>http://localhost:5173</code>.</p>
+
+  <h3>Step 3: Operating the Application</h3>
+  <ol>
+    <li>Navigate to <code>http://localhost:5173</code> in your web browser.</li>
+    <li>Click <strong>"Generate Realistic Data"</strong> in the top header to seed the database with 35 companies, 800 candidates, and 20 rooms.</li>
+    <li>Click <strong>"Run EAS Scheduler"</strong> to generate the conflict-free master schedule.</li>
+    <li>Observe real-time KPI metric cards, room utilization, and constraint bottleneck breakdowns.</li>
+    <li>Click <strong>"Simulate Disruption"</strong> to test any of the 4 disruption types and inspect the surgical before/after diff report.</li>
+  </ol>
+
+  <hr style="margin: 2.5rem 0 1.5rem 0; border: none; border-top: 1px solid var(--border);" />
+  <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-muted);">
+    <span>Placement Week Scheduler &bull; MERN Full-Stack Technical Documentation</span>
+    <span>Generated: September 2026</span>
+  </div>
+</div>
+
+</body>
+</html>

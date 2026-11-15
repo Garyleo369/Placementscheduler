@@ -1,0 +1,17 @@
+{
+  "name": "placement-scheduler",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Placement Week Scheduler - Monorepo root",
+  "scripts": {
+    "server": "npm run dev --prefix server",
+    "client": "npm run dev --prefix client",
+    "build:client": "npm run build --prefix client",
+    "start": "npm run start --prefix server"
+  },
+  "keywords": [
+    "scheduler",
+    "react",
+    "express"
+  ]
+}
